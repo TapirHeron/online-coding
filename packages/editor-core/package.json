@@ -1,0 +1,20 @@
+{
+  "name": "@online-coding/editor-core",
+  "version": "1.0.0",
+  "description": "编辑器核心逻辑",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@online-coding/shared": "1.0.0",
+    "monaco-editor": "^0.55.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "rimraf": "^5.0.0"
+  }
+}

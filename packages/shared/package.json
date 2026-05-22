@@ -1,0 +1,16 @@
+{
+  "name": "@online-coding/shared",
+  "version": "1.0.0",
+  "description": "共享工具和类型定义",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "rimraf": "^5.0.0"
+  }
+}

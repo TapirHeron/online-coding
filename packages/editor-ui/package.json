@@ -1,0 +1,19 @@
+{
+  "name": "@online-coding/editor-ui",
+  "version": "1.0.0",
+  "description": "编辑器 UI 组件",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@online-coding/shared": "1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "rimraf": "^5.0.0"
+  }
+}

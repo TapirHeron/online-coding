@@ -1,0 +1,89 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "monaco",
+    "typescript",
+    "javascript",
+    "prettier",
+    "eslint",
+    "husky",
+    "lint-staged",
+    "commitlint",
+    "commitlint",
+    "editorconfig",
+    "monorepo",
+    "workspaces",
+    "esbenp",
+    "dbaeumer",
+    "vscode",
+    "esnext",
+    "lib",
+    "esbuild",
+    "webpack",
+    "vite",
+    "unpkg",
+    "cdnjs",
+    "cdnjs",
+    "devtools",
+    "devcontainer",
+    "codeql",
+    "codecov",
+    "sonarqube",
+    "tapir",
+    "heron"
+  ],
+  "ignoreWords": ["monaco", "workspaces"],
+  "import": [],
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    "*.min.js",
+    "*.min.css",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    ".git",
+    ".vscode",
+    ".husky",
+    "*.svg",
+    "*.png",
+    "*.jpg",
+    "*.jpeg",
+    "*.gif"
+  ],
+  "dictionaries": ["typescript", "node", "softwareTerms", "misc", "html", "css", "fonts"],
+  "dictionaryDefinitions": [],
+  "patterns": [
+    {
+      "name": "comment-single-line",
+      "pattern": "/\\/\\/.*$/g"
+    },
+    {
+      "name": "comment-multi-line",
+      "pattern": "/\\/\\*[\\s\\S]*?\\*\\//g"
+    },
+    {
+      "name": "string-single-quote",
+      "pattern": "/'[^']*'/g"
+    },
+    {
+      "name": "string-double-quote",
+      "pattern": "/\"[^\"]*\"/g"
+    },
+    {
+      "name": "string-template",
+      "pattern": "/`[^`]*`/g"
+    }
+  ],
+  "ignoreRegExpList": [
+    "comment-single-line",
+    "comment-multi-line",
+    "string-single-quote",
+    "string-double-quote",
+    "string-template"
+  ],
+  "checkLimit": 5000
+}

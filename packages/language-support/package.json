@@ -1,0 +1,20 @@
+{
+  "name": "@online-coding/language-support",
+  "version": "1.0.0",
+  "description": "语言支持和代码补全",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@online-coding/shared": "1.0.0",
+    "monaco-editor": "^0.55.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "rimraf": "^5.0.0"
+  }
+}

@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 验证提交信息格式
+# 格式：<type>(<scope>): <subject>
+# type: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
+npx commitlint --edit "$1" --config commitlint.config.cjs
