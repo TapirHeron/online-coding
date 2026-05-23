@@ -64,13 +64,8 @@ class OnlineCodingApp {
   private configureMonacoEnvironment(): void {
     (window as any).MonacoEnvironment = {
       getWorkerUrl: function (moduleId: string, label: string) {
-        // 使用内联 worker 避免跨域问题
-        return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
-          self.MonacoEnvironment = {
-            baseUrl: '../node_modules/monaco-editor/min/'
-          };
-          importScripts('../node_modules/monaco-editor/min/vs/base/worker/workerMain.js');
-        `)}`;
+        // 使用 CDN 加载 worker
+        return `https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/base/worker/workerMain.js`;
       }
     };
   }

@@ -1,10 +1,5 @@
-// 语言类型定义
 export type Language = 'javascript' | 'typescript' | 'python' | 'java' | 'cpp' | 'go' | 'rust';
-
-// 主题类型定义
 export type Theme = 'vs' | 'vs-dark' | 'hc-black';
-
-// 编辑器配置接口
 export interface EditorConfig {
   language: Language;
   theme: Theme;
@@ -13,19 +8,15 @@ export interface EditorConfig {
   wordWrap?: 'on' | 'off';
   tabSize?: number;
 }
-
-// 代码补全项接口（使用 Monaco Editor 的类型）
 export interface CompletionItem {
   label: string;
-  kind: number; // 使用 Monaco Editor 的 CompletionItemKind 值
+  kind: number;
   insertText: string;
   insertTextRules?: number;
   documentation?: string;
   detail?: string;
 }
-
-// 代码补全类型（与 Monaco Editor 的 LSP 标准保持一致）
-export enum CompletionItemKind {
+export declare enum CompletionItemKind {
   Text = 1,
   Method = 2,
   Function = 3,
@@ -52,14 +43,10 @@ export enum CompletionItemKind {
   Operator = 24,
   TypeParameter = 25
 }
-
-// 编辑器事件
 export interface EditorEvent {
   type: 'change' | 'save' | 'cursor-position';
   data: any;
 }
-
-// 语言支持配置
 export interface LanguageSupport {
   language: Language;
   completionProvider?: any;

@@ -6,78 +6,88 @@
 
 ```
 online-coding/
-├── packages/                      # 核心包
-│   ├── shared/                   # 共享工具和类型定义
+├── packages/
+│   ├── shared/
 │   │   ├── src/
-│   │   │   ├── types.ts         # 类型定义
-│   │   │   └── index.ts         # 工具函数
-│   │   ├── package.json
-│   │   └── tsconfig.json
-│   │
-│   ├── editor-core/              # 编辑器核心逻辑
-│   │   ├── src/
-│   │   │   ├── editor.ts        # 编辑器类
+│   │   │   ├── types.ts
 │   │   │   └── index.ts
 │   │   ├── package.json
 │   │   └── tsconfig.json
 │   │
-│   ├── language-support/         # 语言支持（语法高亮、代码补全）
+│   ├── editor-core/
 │   │   ├── src/
-│   │   │   ── index.ts         # 语言支持实现
+│   │   │   ├── editor.ts
+│   │   │   └── index.ts
 │   │   ├── package.json
 │   │   └── tsconfig.json
 │   │
-│   └── editor-ui/                # UI 组件
+│   ├── language-support/
+│   │   ├── src/
+│   │   │   ── index.ts
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   │
+│   └── editor-ui/
 │       ├── src/
-│       │   ├── components.ts    # UI 组件
+│       │   ├── components.ts
 │       │   └── index.ts
 │       ├── package.json
 │       └── tsconfig.json
 │
-├── apps/                          # 应用
-│   └── web/                      # Web 应用
+├── apps/
+│   └── web/
 │       ├── src/
-│       │   ├── index.html       # 主页面
-│       │   └── main.ts          # 应用入口
+│       │   ├── main.ts
+│       ├── index.html
+│       ├── vite.config.ts
 │       └── package.json
 │
-── package.json                   # 根配置
-├── pnpm-workspace.yaml           # Workspace 配置
-└── tsconfig.json                 # TypeScript 配置
+├── package.json
+├── tsconfig.json
+├── eslint.config.js
+├── .prettierrc.json
+└── commitlint.config.cjs
 ```
 
 ## 🚀 快速开始
 
+### 环境要求
+
+- **Node.js**: >=18.0.0
+- **包管理器**: npm (使用 workspaces)
+
 ### 安装依赖
 
 ```bash
-# 使用 npm（推荐）
 npm install
-
-# 或使用 pnpm
-pnpm install
-
-# 或使用 yarn
-yarn install
 ```
+
+> ⚠️ **注意**：本项目使用 npm workspaces 管理 Monorepo，请使用 npm 而非 pnpm 或 yarn。
 
 ### 开发模式
 
 ```bash
-# 启动开发服务器
-npm run dev
-
-# 访问 http://localhost:8080
+npm run dev --workspace=apps/web
 ```
+
+> 💡 **提示**：Vite 服务器会自动打开浏览器。如果 8080 端口被占用，会自动尝试 8081、8082 等。
 
 ### 构建项目
 
 ```bash
-# 构建所有包
+npm run type-check
+
 npm run build
 
-# 构建所有包（别名）
-npm run build:all
+npm run clean
+```
+
+### 单独构建某个包
+
+```bash
+npm run build --workspace=packages/shared
+
+npm run build --workspace=packages/editor-ui
 ```
 
 ## ✨ 功能特性
@@ -181,23 +191,106 @@ const newApis: CompletionItem[] = [
 
 编辑 `packages/editor-ui/src/components.ts` 中的 ThemeManager 类。
 
-## 📚 Monaco Editor 配置
+## 📚 技术栈
 
-项目使用 Monaco Editor 0.55.1 版本，配置了：
+### 核心框架
 
-- 内联 Worker（解决跨域问题）
-- 自动布局
-- 代码折叠
-- 语法高亮
-- 智能补全
+- **TypeScript**: 5.x（严格模式 enabled）
+- **Monaco Editor**: 0.55.1（VS Code 同款编辑器）
+- **Vite**: 8.x（现代前端构建工具）
+- **Monorepo**: npm workspaces
+
+### 代码质量工具
+
+- **ESLint**: 代码检查
+- **Prettier**: 代码格式化
+- **Husky**: Git hooks
+- **Commitlint**: 提交信息规范
+
+### TypeScript 配置说明
+
+所有包都使用以下配置：
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "rootDirs": ["./src", "../shared/src"]
+  }
+}
+```
+
+**为什么使用这些配置？**
+
+- ✅ **ESNext**: 与 Vite 完美配合，支持 tree-shaking
+- ✅ **bundler**: 专为打包工具设计的模块解析
+- ✅ **strict**: 捕获更多潜在错误，提高代码质量
+- ✅ **rootDirs**: 支持 monorepo 内部包引用
+
+## 🌐 Monaco Editor 配置
+
+项目使用 Monaco Editor 0.55.1 版本，通过 **CDN** 加载：
+
+### CDN 加载方式
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/loader.js"></script>
+```
+
+```typescript
+(window as any).MonacoEnvironment = {
+  getWorkerUrl: function () {
+    return `https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/base/worker/workerMain.js`;
+  }
+};
+```
+
+### 为什么使用 CDN？
+
+- ✅ 避免 Vite 处理 Monaco 的 AMD loader 路径问题
+- ✅ 更快地加载速度（CDN 缓存）
+- ✅ 简化项目配置
+- ✅ 减少 node_modules 体积
+
+### 编辑器特性
+
+- ✅ 语法高亮（6+ 语言）
+- ✅ 智能代码补全
+- ✅ 代码格式化
+- ✅ 自动括号匹配
+- ✅ 代码折叠
+- ✅ 行号显示
+- ✅ 主题切换（3 种主题）
+- ✅ 内联 Worker（无跨域问题）
 
 ## 🐛 故障排除
 
-### 编辑器没有语法高亮
+### Vite 服务器无法启动
 
-1. 确保通过 HTTP 服务器访问（不要直接打开 HTML 文件）
-2. 检查浏览器控制台是否有错误
-3. 确认 Monaco Editor 文件正确加载
+1. 确认 Node.js 版本 >= 18.0.0
+2. 检查端口是否被占用（默认 8080，会自动递增）
+3. 查看控制台错误信息
+
+### TypeScript 类型错误
+
+如果遇到 "Cannot find module '@online-coding/xxx'" 错误：
+
+```bash
+npm run type-check
+
+npm run clean
+npm run build
+```
+
+### Monaco Editor 不显示
+
+1. ✅ 确认使用 CDN 加载（已配置）
+2. ✅ 确保通过 HTTP 服务器访问（不要直接打开 HTML）
+3. ✅ 检查浏览器控制台是否有网络错误
+4. ✅ 确认网络连接正常（需要访问 jsdelivr CDN）
 
 ### 代码补全不工作
 
@@ -205,27 +298,60 @@ const newApis: CompletionItem[] = [
 2. 检查语言设置是否匹配
 3. 查看控制台是否有错误信息
 
-### Worker 跨域问题
+### 内部包引用错误
 
-项目已配置内联 Worker，如果遇到跨域问题，确保：
+Monorepo 内部包使用 TypeScript 路径映射：
 
-- MonacoEnvironment 配置正确
-- 使用 HTTP 服务器访问
+```json
+{
+  "paths": {
+    "@online-coding/shared": ["../shared/src"]
+  }
+}
+```
 
-## 📄 License
-
-MIT License
+无需构建即可在开发时使用源文件。
 
 ## 🤝 贡献
 
 欢迎贡献代码！请遵循以下步骤：
 
 1. Fork 项目
-2. 创建特性分支
-3. 提交更改
-4. 推送到分支
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'feat: add some feature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 创建 Pull Request
+
+### 提交信息规范
+
+项目使用 Conventional Commits 规范：
+
+- `feat:` 新功能
+- `fix:` 修复 bug
+- `docs:` 文档更新
+- `style:` 代码格式
+- `refactor:` 重构
+- `test:` 测试相关
+- `chore:` 构建/工具相关
+
+### 代码规范
+
+- 使用 ESLint + Prettier 保持代码风格一致
+- 启用 Husky pre-commit hook 自动检查和格式化
+- 所有代码必须通过 TypeScript 严格模式检查
 
 ---
 
 **享受编码的乐趣！** 🎉
+
+## 📝 更新日志
+
+### 2026-05-23
+
+- ✅ 迁移到 Vite 构建工具
+- ✅ 使用 CDN 加载 Monaco Editor
+- ✅ 优化 TypeScript 配置（ESNext + bundler）
+- ✅ 添加 monorepo 路径映射
+- ✅ 移除 pnpm，统一使用 npm workspaces
+- ✅ 修复 CompletionItemKind 枚举值（LSP 标准）
+- ✅ 启用严格模式（strict: true）

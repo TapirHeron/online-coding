@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "commonjs",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@online-coding/shared": ["../shared/src"]
+    },
+    "rootDirs": ["./src", "../shared/src"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
