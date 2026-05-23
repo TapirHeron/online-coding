@@ -20,7 +20,7 @@
     "spell": "cspell \"**/*.{ts,tsx,js,jsx,md}\"",
     "prepare": "husky",
     "type-check": "tsc --noEmit",
-    "commit": "git-cz"
+    "commit": "git add . && git-cz"
   },
   "dependencies": {
     "monaco-editor": "^0.55.1"
